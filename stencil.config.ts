@@ -1,8 +1,10 @@
 import { Config } from '@stencil/core';
+import alias from '@rollup/plugin-alias';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import nodePolyfills from 'rollup-plugin-node-polyfills';
 
-// https://stenciljs.com/docs/config
+// import nodePolyfills from 'rollup-plugin-node-polyfills'; // ionic-team
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+
 
 export const config: Config = {
   globalStyle: 'src/global/app.css',
@@ -16,6 +18,7 @@ export const config: Config = {
       baseUrl: 'https://myapp.local/',
     },
   ],
+  sourceMap: true,
   // THIS DOESN'T WORKs
   // nodeResolve: {
   //   browser: true,
@@ -23,6 +26,26 @@ export const config: Config = {
   // },
   rollupPlugins: {
     before: [
+      alias({
+        entries: [
+          { find: 'process', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'path', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'util', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'buffer', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'crypto', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'http', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'https', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'os', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'url', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'assert', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'events', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'string_decoder/', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'string_decoder', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'stream', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'punycode', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' },
+          { find: 'querystring', replacement: './node_modules/rollup-plugin-polyfill-node/dist/index.js' }
+        ]
+      }),
       nodeResolve(
         {
           browser: true,
@@ -31,7 +54,11 @@ export const config: Config = {
       )
     ],
     after: [
-      nodePolyfills(),
+      nodePolyfills(
+        {
+          // crypto: true // this is just in ionic-team plugin
+        }
+      )
     ]
   }
 };

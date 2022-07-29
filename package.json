@@ -15,13 +15,15 @@
     "@types/jest": "^27.0.3",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
-    "puppeteer": "^10.0.0",
-    "rollup-plugin-node-polyfills": "latest"
+    "puppeteer": "^10.0.0"
   },
   "license": "MIT",
   "dependencies": {
+    "@rollup/plugin-alias": "latest",
     "@rollup/plugin-node-resolve": "latest",
     "@walletconnect/web3-provider": "^1.7.8",
+    "rollup-plugin-node-polyfills": "latest",
+    "rollup-plugin-polyfill-node": "latest",
     "web3": "^1.7.4"
   }
 }
